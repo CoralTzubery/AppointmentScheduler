@@ -1,7 +1,27 @@
 import express from "express";
+import { PostModel } from "../models/posts.model";
 
 export const router = express.Router();
 
-router.get("/hello", (_, res) => {
-    res.json({ message: "Hello World!" });
+router.get("/posts",  async (req, res) => {
+    const posts = await PostModel.find().sort({ createdAt: -1 });
+    res.json({posts});
 });
+
+router.post("/posts", async(req, res) => {
+    cost { title, content } = req.body;
+
+    if (!title || !content) {
+        return res.status(400).json( {message: 'Title and content are required' });
+    }
+
+    try { 
+        const newPost = new PostModel({ title, content });
+        const saved = await newPost.save();
+        res.status(201).json(saved);
+    } catch (err) {
+        res.status(500).json({ message: 'Error saving post', error: err });
+    }
+});
+
+export default router;
