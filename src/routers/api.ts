@@ -1,15 +1,14 @@
 import express from "express";
 import { PostModel } from "../models/posts.model";
-
-export const router = express.Router();
+const router = express.Router();
 
 router.get("/posts",  async (req, res) => {
     const posts = await PostModel.find().sort({ createdAt: -1 });
     res.json({posts});
 });
 
-router.post("/posts", async(req, res) => {
-    cost { title, content } = req.body;
+router.post("/posts", async (req, res) => {
+    const { title, content } = req.body;
 
     if (!title || !content) {
         return res.status(400).json( {message: 'Title and content are required' });
