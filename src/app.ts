@@ -4,7 +4,7 @@ import { json } from "body-parser";
 import cookieParser from "cookie-parser";
 import { router as apiRouter } from "./routers/api";
 
-export const app = express();
+const app = express();
 
 app.use((req, _, next) => {
     console.log(new Date(), req.method, req.url);
@@ -19,3 +19,5 @@ app.use(express.static(path.resolve(__dirname, "..", "public")));
 app.use((_, res) => {
     res.redirect("404.html");
 });
+
+export default app;
