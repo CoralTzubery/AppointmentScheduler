@@ -1,6 +1,14 @@
 export async function initApp(root: HTMLPreElement) {
-    const res = await fetch('/api/hello');
-    const data = await res.json();
+    try {
+        const res = await fetch('/api/appointments');
+        if (!res.ok) {
+            throw new Error("Failed to fetch appointments");
+        }
 
-    root.textContent = JSON.stringify(data, null, 2);
+        const data = await res.json();
+
+        root.textContent = JSON.stringify(data, null, 2);
+    } catch (error) {
+        root.textContent = `Error: ${error.message}`;
+    }
 }
