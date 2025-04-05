@@ -5,7 +5,14 @@ const schema = new Schema({
         type: String,
         required: true,
     },
-    content: String,
+    content: {
+        type: String,
+        required: true,
+    },
+    createdAt: {
+        type: String,
+        default: () => new Date().toISOString(),
+    },
 }, { timestamps: true });
 
-export const Listing = model("Post", schema);
+export const PostModel = model("Post", schema);
